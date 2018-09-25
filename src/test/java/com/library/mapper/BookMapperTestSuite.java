@@ -22,14 +22,15 @@ public class BookMapperTestSuite {
     @Test
     public void testMapToBook() {
         //given
-        final BookDto testBookDto = new BookDto((long) 1, "test", "test", "2000");
+        final BookDto testBookDto = new BookDto(1L, "test", "test", "2000", new ArrayList<>());
         //when
         final Book testBook = bookMapper.mapToBook(testBookDto);
         //then
+        assertEquals(testBookDto.getId(), testBook.getId());
         assertEquals(testBookDto.getTitle(), testBook.getTitle());
         assertEquals(testBookDto.getAuthor(), testBook.getAuthor());
         assertEquals(testBookDto.getDateOfPublication(), testBook.getDateOfPublication());
-
+        assertEquals(testBookDto.getSpecimens(), testBook.getSpecimens());
     }
 
     @Test
@@ -40,16 +41,17 @@ public class BookMapperTestSuite {
         final BookDto testBookDto = bookMapper.mapToBookDto(testNullBook);
         long bookId = testBookDto.getId();
         //then
-        assertEquals(000, bookId);
+        assertEquals(0L, bookId);
         assertEquals("", testBookDto.getTitle());
         assertEquals("", testBookDto.getAuthor());
         assertEquals("", testBookDto.getDateOfPublication());
+        assertNotNull(testBookDto.getSpecimens());
     }
 
     @Test
     public void testMapToBookDto() {
         //given
-        final Book testBook = new Book("test", "test", "2000");
+        final Book testBook = new Book(1L,"test", "test", "2000", new ArrayList<>());
         //when
         final BookDto testBookDto = bookMapper.mapToBookDto(testBook);
         //then
@@ -57,6 +59,7 @@ public class BookMapperTestSuite {
         assertEquals(testBook.getTitle(), testBookDto.getTitle());
         assertEquals(testBook.getAuthor(), testBookDto.getAuthor());
         assertEquals(testBook.getDateOfPublication(), testBookDto.getDateOfPublication());
+        assertEquals(testBook.getSpecimens(), testBookDto.getSpecimens());
 
     }
 
@@ -66,10 +69,13 @@ public class BookMapperTestSuite {
         final BookDto testNullBookDto = null;
         //when
         final Book testBook = bookMapper.mapToBook(testNullBookDto);
+        long id = testBook.getId();
         //then
+        assertEquals(0L, id);
         assertEquals("", testBook.getTitle());
         assertEquals("", testBook.getAuthor());
         assertEquals("", testBook.getDateOfPublication());
+        assertNotNull(testBook.getSpecimens());
     }
 
     @Test

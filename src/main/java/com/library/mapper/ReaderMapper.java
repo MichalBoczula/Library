@@ -14,11 +14,13 @@ public class ReaderMapper {
     public Reader mapToReader(final ReaderDto readerDto) {
         return readerDto != null ?
                 new Reader(
+                        readerDto.getId(),
                         readerDto.getFirstName(),
                         readerDto.getLastName(),
                         readerDto.getDateOfAccountCreation()
                 ) :
                 new Reader(
+                        0L,
                         "",
                         "",
                         new Date()
@@ -34,7 +36,7 @@ public class ReaderMapper {
                         reader.getDateOfAccountCreation()
                 ) :
                 new ReaderDto(
-                        (long) 000,
+                        0L,
                         "",
                         "",
                         new Date()

@@ -13,12 +13,17 @@ public class RentMapper {
     public Rent mapToRent(final RentDto rentDto){
         return rentDto != null ?
                 new Rent(
+                        rentDto.getId(),
                         rentDto.getRentDate(),
+                        rentDto.getReturnDate(),
                         rentDto.getSpecimen(),
                         rentDto.getReader()
                 ) :
                 new Rent(
-                        new Specimen("", new Book()),
+                        0L,
+                        new Date(),
+                        new Date(),
+                        new Specimen("", new Book("", "", "")),
                         new Reader("", "")
                 );
     }
@@ -33,10 +38,10 @@ public class RentMapper {
                         rent.getReader()
                 ) :
                 new RentDto(
-                        (long) 000,
+                        0L,
                         new Date(),
                         new Date(),
-                        new Specimen("", new Book()),
+                        new Specimen("", new Book("", "", "")),
                         new Reader("", "")
                 );
     }

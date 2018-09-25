@@ -32,12 +32,10 @@ public class Rent {
         this.reader = reader;
     }
 
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public Rent(Date rentDate, Specimen specimen, Reader reader) {
+    public Rent(Long id, Date rentDate, Date returnDate, Specimen specimen, Reader reader) {
+        this.id = id;
         this.rentDate = rentDate;
+        this.returnDate = returnDate;
         this.specimen = specimen;
         this.reader = reader;
     }

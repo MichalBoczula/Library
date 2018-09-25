@@ -2,13 +2,11 @@ package com.library.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@ToString
 @Getter
 @NoArgsConstructor
 @Entity
@@ -34,7 +32,8 @@ public class Reader {
         dateOfAccountCreation = new Date();
     }
 
-    public Reader(String firstName, String lastName, Date dateOfAccountCreation) {
+    public Reader(Long id, String firstName, String lastName, Date dateOfAccountCreation) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfAccountCreation = dateOfAccountCreation;

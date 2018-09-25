@@ -24,7 +24,7 @@ public class ReaderMapperTestSuite {
     public void testMapToReader() {
         //given
         final ReaderDto readerDto = new ReaderDto(
-                (long) 1,
+                1L,
                 "test1",
                 "test11",
                 new Date(2000, 1, 1)
@@ -32,6 +32,7 @@ public class ReaderMapperTestSuite {
         //when
         final Reader reader = readerMapper.mapToReader(readerDto);
         //then
+        assertEquals(readerDto.getId(), reader.getId());
         assertEquals(readerDto.getFirstName(), reader.getFirstName());
         assertEquals(readerDto.getLastName(), reader.getLastName());
         assertEquals(readerDto.getDateOfAccountCreation(), reader.getDateOfAccountCreation());
@@ -52,11 +53,7 @@ public class ReaderMapperTestSuite {
     @Test
     public void testMapToReaderDto() {
         //given
-        final Reader reader = new Reader(
-                "test1",
-                "test11",
-                new Date(2000, 1, 1)
-        );
+        final Reader reader = new Reader("test", "test");
         //when
         final ReaderDto readerDto = readerMapper.mapToReaderDto(reader);
         //then
@@ -74,7 +71,7 @@ public class ReaderMapperTestSuite {
         final ReaderDto readerDto = readerMapper.mapToReaderDto(reader);
         long readerId = readerDto.getId();
         //then
-        assertEquals(000, readerId);
+        assertEquals(0L, readerId);
         assertEquals("", readerDto.getFirstName());
         assertEquals("", readerDto.getLastName());
         assertEquals(new Date(), readerDto.getDateOfAccountCreation());
@@ -85,23 +82,19 @@ public class ReaderMapperTestSuite {
         //given
         final List<Reader> readerList = new ArrayList<>();
         final Reader reader1 = new Reader(
+                1L,
                 "test1",
                 "test11",
                 new Date(2000, 1, 1)
         );
         final Reader reader2 = new Reader(
+                1L,
                 "test2",
                 "test22",
                 new Date(2002, 2, 2)
         );
-        final Reader reader3 = new Reader(
-                "test3",
-                "test33",
-                new Date(2003, 3, 3)
-        );
         readerList.add(reader1);
         readerList.add(reader2);
-        readerList.add(reader3);
         //when
         final List<ReaderDto> readerDtoList = readerMapper.mapToReaderDtoList(readerList);
         //then
@@ -114,10 +107,6 @@ public class ReaderMapperTestSuite {
         assertEquals(readerList.get(1).getFirstName(), readerDtoList.get(1).getFirstName());
         assertEquals(readerList.get(1).getLastName(), readerDtoList.get(1).getLastName());
         assertEquals(readerList.get(1).getDateOfAccountCreation(), readerDtoList.get(1).getDateOfAccountCreation());
-        assertEquals(readerList.get(2).getId(), readerDtoList.get(2).getId());
-        assertEquals(readerList.get(2).getFirstName(), readerDtoList.get(2).getFirstName());
-        assertEquals(readerList.get(2).getLastName(), readerDtoList.get(2).getLastName());
-        assertEquals(readerList.get(2).getDateOfAccountCreation(), readerDtoList.get(2).getDateOfAccountCreation());
     }
 
     @Test

@@ -13,14 +13,18 @@ public class BookMapper {
     public Book mapToBook(final BookDto bookDto) {
         return bookDto != null ?
                 new Book(
+                        bookDto.getId(),
                         bookDto.getTitle(),
                         bookDto.getAuthor(),
-                        bookDto.getDateOfPublication()
+                        bookDto.getDateOfPublication(),
+                        bookDto.getSpecimens()
                 ) :
                 new Book(
+                        0L,
                         "",
                         "",
-                        ""
+                        "",
+                        new ArrayList<>()
                 );
     }
 
@@ -30,13 +34,15 @@ public class BookMapper {
                         book.getId(),
                         book.getTitle(),
                         book.getAuthor(),
-                        book.getDateOfPublication()
+                        book.getDateOfPublication(),
+                        book.getSpecimens()
                 ) :
                 new BookDto(
-                        (long) 000,
+                        0L,
                         "",
                         "",
-                        ""
+                        "",
+                        new ArrayList<>()
                 );
     }
 
@@ -47,7 +53,8 @@ public class BookMapper {
                                         book.getId(),
                                         book.getTitle(),
                                         book.getAuthor(),
-                                        book.getDateOfPublication()
+                                        book.getDateOfPublication(),
+                                        book.getSpecimens()
                                 )
                         )
                         .collect(Collectors.toList()) :

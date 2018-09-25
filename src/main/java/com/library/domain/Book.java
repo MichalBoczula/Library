@@ -39,4 +39,12 @@ public class Book {
         this.author = author;
         this.dateOfPublication = dateOfPublication;
     }
+
+    public Book(Long id, String title, String author, String dateOfPublication, List<Specimen> specimens) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.dateOfPublication = dateOfPublication;
+        this.specimens = specimens;
+    }
 }

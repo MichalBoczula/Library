@@ -26,4 +26,10 @@ public class Specimen {
         this.status = status;
         this.book = book;
     }
+
+    public Specimen(Long id, String status, Book book) {
+        this.id = id;
+        this.status = status;
+        this.book = book;
+    }
 }

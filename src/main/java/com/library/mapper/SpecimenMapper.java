@@ -14,12 +14,14 @@ public class SpecimenMapper {
     public Specimen mapToSpecimen(final SpecimenDto specimenDto) {
         return specimenDto != null ?
                 new Specimen(
+                        specimenDto.getId(),
                         specimenDto.getStatus(),
                         specimenDto.getBook()
                 ) :
                 new Specimen(
+                        0L,
                         "",
-                        new Book()
+                        new Book("", "", "")
                 );
     }
 
@@ -31,9 +33,9 @@ public class SpecimenMapper {
                         specimen.getBook()
                 ) :
                 new SpecimenDto(
-                        000L,
+                        0L,
                         "",
-                        new Book()
+                        new Book("", "", "")
                 );
     }
 
