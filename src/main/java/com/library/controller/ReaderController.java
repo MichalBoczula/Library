@@ -28,22 +28,22 @@ public class ReaderController {
     }
 
     @RequestMapping(method = GET, value = "getReader")
-    public ReaderDto getReader(@RequestParam Long readerId) throws ReaderNotFoundException {
+    public ReaderDto getReader(@RequestParam final Long readerId) throws ReaderNotFoundException {
         return readerMapper.mapToReaderDto(dbServiceReaders.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
     }
 
     @RequestMapping(method = POST, value = "createReader", consumes = APPLICATION_JSON_VALUE)
-    public void createReader(@RequestBody ReaderDto readerDto) {
+    public void createReader(@RequestBody final ReaderDto readerDto) {
         dbServiceReaders.save(readerMapper.mapToReader(readerDto));
     }
 
     @RequestMapping(method = DELETE, value = "deleteReader")
-    public void deleteReader(@RequestParam Long readerId) throws ReaderNotFoundException {
+    public void deleteReader(@RequestParam final Long readerId) throws ReaderNotFoundException {
         dbServiceReaders.delete(dbServiceReaders.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
     }
 
     @RequestMapping(method = PUT, value = "updateReader")
-    public ReaderDto updateReader(@RequestParam ReaderDto readerDto) {
+    public ReaderDto updateReader(@RequestParam final ReaderDto readerDto) {
         return readerMapper.mapToReaderDto(dbServiceReaders.save(readerMapper.mapToReader(readerDto)));
     }
 }
