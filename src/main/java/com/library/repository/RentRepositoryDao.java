@@ -14,5 +14,5 @@ public interface RentRepositoryDao extends CrudRepository<Rent, Long> {
     @Override
     List<Rent> findAll();
 
-    Optional<Rent> findById(Long readerId);
+    Optional<Rent> findById(final Long rentId);
 }

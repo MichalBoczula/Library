@@ -17,15 +17,15 @@ public class DbServiceReaders {
         return readerRepositoryDao.findAll();
     }
 
-    public Optional<Reader> getReader(Long readerId) {
+    public Optional<Reader> getReader(final Long readerId) {
         return readerRepositoryDao.findById(readerId);
     }
 
-    public Reader save(Reader reader) {
+    public Reader save(final Reader reader) {
         return readerRepositoryDao.save(reader);
     }
 
-    public void delete(Reader reader) {
+    public void delete(final Reader reader) {
         readerRepositoryDao.delete(reader);
     }
 }

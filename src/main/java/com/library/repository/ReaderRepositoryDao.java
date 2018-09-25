@@ -14,5 +14,5 @@ public interface ReaderRepositoryDao extends CrudRepository<Reader, Long> {
     @Override
     List<Reader> findAll();
 
-    Optional<Reader> findById(Long readerId);
+    Optional<Reader> findById(final Long readerId);
 }

@@ -35,4 +35,10 @@ public class Rent {
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
+
+    public Rent(Date rentDate, Specimen specimen, Reader reader) {
+        this.rentDate = rentDate;
+        this.specimen = specimen;
+        this.reader = reader;
+    }
 }

@@ -17,15 +17,15 @@ public class DbServiceBooks {
         return bookRepositoryDao.findAll();
     }
 
-    public Optional<Book> findBookWithId(Long bookId) {
+    public Optional<Book> findBookWithId(final Long bookId) {
         return bookRepositoryDao.findById(bookId);
     }
 
-    public Book saveBook(Book book) {
+    public Book saveBook(final Book book) {
         return bookRepositoryDao.save(book);
     }
 
-    public void deleteBook(Book book) {
+    public void deleteBook(final Book book) {
         bookRepositoryDao.delete(book);
     }
 

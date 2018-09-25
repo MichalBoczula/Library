@@ -14,6 +14,6 @@ public interface SpecimenRepositoryDao extends CrudRepository<Specimen, Long> {
     @Override
     List<Specimen> findAll();
 
-    Optional<Specimen> findById(Long readerId);
+    Optional<Specimen> findById(final Long specimenId);
 
 }
