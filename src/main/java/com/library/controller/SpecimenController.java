@@ -46,4 +46,5 @@ public class SpecimenController {
     public SpecimenDto updateSpecimen(@RequestBody final SpecimenDto specimenDto){
         return specimenMapper.mapToSpecimenDto(dbServiceSpecimen.save(specimenMapper.mapToSpecimen(specimenDto)));
     }
+
 }

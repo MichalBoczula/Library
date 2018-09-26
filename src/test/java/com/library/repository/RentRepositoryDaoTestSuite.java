@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -95,5 +97,14 @@ public class RentRepositoryDaoTestSuite {
         assertEquals(2, rentRepositoryDao.count());
         assertEquals(rent1.getId(), testR1.get().getId());
         assertEquals(rent2.getId(), testR2.get().getId());
+    }
+
+    @Test
+    public void setReturnDate(){
+        //when
+        rentRepositoryDao.setReturnDate(rent1.getId());
+        //then
+        assertNotNull(rent1.getReturnDate());
+        //cleanUp
     }
 }

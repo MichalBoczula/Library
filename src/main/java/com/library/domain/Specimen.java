@@ -2,6 +2,7 @@ package com.library.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.Session;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,5 +32,9 @@ public class Specimen {
         this.id = id;
         this.status = status;
         this.book = book;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

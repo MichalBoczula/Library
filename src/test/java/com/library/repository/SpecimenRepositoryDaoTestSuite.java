@@ -2,14 +2,18 @@ package com.library.repository;
 
 import com.library.domain.Book;
 import com.library.domain.Specimen;
+import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +47,9 @@ public class SpecimenRepositoryDaoTestSuite {
     @After
     public void cleanUp() {
         //cleanUp
-        specimenRepositoryDao.delete(specimen1);
-        specimenRepositoryDao.delete(specimen2);
-        bookRepositoryDao.delete(book);
+//        specimenRepositoryDao.delete(specimen1);
+//        specimenRepositoryDao.delete(specimen2);
+//        bookRepositoryDao.delete(book);
     }
 
     @Test
@@ -75,6 +79,13 @@ public class SpecimenRepositoryDaoTestSuite {
         assertEquals(2, specimenRepositoryDao.count());
         assertEquals(specimen1.getId(), testSpecimen1.get().getId());
         assertEquals(specimen2.getId(), testSpecimen2.get().getId());
+    }
+
+    @Test
+    public void setStatusOnRented(){
+        specimen1.setStatus("rented");
+        assertEquals("rented", specimen1.getStatus());
+        specimenRepositoryDao.save(specimen1);
     }
 
 }
