@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/library/")
+@RequestMapping("/library/specimens")
 public class SpecimenController {
     @Autowired
     private SpecimenService specimenService;

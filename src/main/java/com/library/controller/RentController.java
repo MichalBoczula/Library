@@ -1,49 +1,40 @@
 package com.library.controller;
 
+import com.library.domain.Rent;
 import com.library.domain.RentDto;
-import com.library.mapper.RentMapper;
-import com.library.service.DbServiceRent;
+import com.library.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
 @RestController
-@RequestMapping("/library/rent")
+@RequestMapping("/library/rents")
 public class RentController {
     @Autowired
-    private DbServiceRent dbServiceRent;
-    @Autowired
-    private RentMapper rentMapper;
+    private RentService rentService;
 
-    @RequestMapping(method = GET, value = "getRents")
+    @GetMapping
     public List<RentDto> getRents() {
-        return rentMapper.mapToRentDtoList(dbServiceRent.findAll());
+        return RentDto.fromRentListToRentDtoList(rentService.findAll());
     }
 
-    @RequestMapping(method = GET, value = "getRent")
-    public RentDto getRent(@RequestParam final Long rentId) throws RentNotFoundException {
-        return rentMapper.mapToRentDto(dbServiceRent.findById(rentId).orElseThrow(RentNotFoundException::new));
+    @GetMapping("{id}")
+    public RentDto getRent(@PathVariable("id") final Long rentId) {
+        return RentDto.fromRentToRentDto(rentService.findById(rentId));
     }
 
-    @RequestMapping(method = POST, value = "createRent", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/create")
     public void createRent(@RequestBody final RentDto rentDto) {
-        dbServiceRent.save(rentMapper.mapToRent(rentDto));
+        final Rent rent = RentDto.fromRentDtoToRent(rentDto);
+        rentService.save(rent);
     }
 
-    @RequestMapping(method = PUT, value = "updateRent")
-    public RentDto updateRent(@RequestBody final RentDto rentDto) {
-        return rentMapper.mapToRentDto(dbServiceRent.save(rentMapper.mapToRent(rentDto)));
-    }
-
-    @RequestMapping(method = DELETE, value = "deleteRent")
-    public void deleteRent(@RequestParam final Long rentId) throws RentNotFoundException {
-        dbServiceRent.delete(dbServiceRent.findById(rentId).orElseThrow(RentNotFoundException::new));
+    @PutMapping("/return/{id}")
+    public RentDto updateRent(@PathVariable("id") final Long rentId) {
+        final Rent rent = rentService.findById(rentId);
+        rent.setReturnDate(new Date());
+        return RentDto.fromRentToRentDto(rentService.save(rent));
     }
 }

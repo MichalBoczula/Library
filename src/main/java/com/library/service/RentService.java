@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DbServiceRent {
+public class RentService {
     private final RentRepository rentRepository;
 
     public List<Rent> findAll() {

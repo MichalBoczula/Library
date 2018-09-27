@@ -12,9 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Reader {
@@ -30,7 +30,7 @@ public class Reader {
     private String lastName;
 
     @CreatedDate
-    private Instant dateOfAccountCreation;
+    private Date dateOfAccountCreation;
 
     @LastModifiedDate
     private Instant lastModifiedDate;
@@ -47,7 +47,7 @@ public class Reader {
             Long id,
             String firstName,
             String lastName,
-            Instant dateOfAccountCreation,
+            Date dateOfAccountCreation,
             Instant lastModifiedDate
     ) {
         this.id = id;

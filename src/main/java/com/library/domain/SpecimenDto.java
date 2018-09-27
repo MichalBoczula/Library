@@ -13,6 +13,7 @@ public class SpecimenDto {
     private Long id;
     private Specimen.SpecimenStatus status;
     private BookDto bookDto;
+    private List<RentDto> rents;
     private Instant createdTime;
     private Instant lastModifiedTime;
 
@@ -23,6 +24,7 @@ public class SpecimenDto {
                         specimen.getId(),
                         specimen.getStatus(),
                         BookDto.fromBookToBookDto(specimen.getBook()),
+                        RentDto.fromRentListToRentDtoList(specimen.getRents()),
                         specimen.getCreatedTime(),
                         specimen.getLastModifiedTime()
                 );
@@ -35,6 +37,7 @@ public class SpecimenDto {
                                         specimen.getId(),
                                         specimen.getStatus(),
                                         BookDto.fromBookToBookDto(specimen.getBook()),
+                                        RentDto.fromRentListToRentDtoList(specimen.getRents()),
                                         specimen.getCreatedTime(),
                                         specimen.getLastModifiedTime()
                                 )
@@ -48,6 +51,7 @@ public class SpecimenDto {
                                         specimenDto.getId(),
                                         specimenDto.getStatus(),
                                         BookDto.fromBookDtoToBook(specimenDto.getBookDto()),
+                                        RentDto.fromRentListDtoToRentList(specimenDto.getRents()),
                                         specimenDto.getCreatedTime(),
                                         specimenDto.getLastModifiedTime()
                                 )
@@ -60,6 +64,7 @@ public class SpecimenDto {
                         specimenDto.getId(),
                         specimenDto.getStatus(),
                         BookDto.fromBookDtoToBook(specimenDto.getBookDto()),
+                        RentDto.fromRentListDtoToRentList(specimenDto.getRents()),
                         specimenDto.getCreatedTime(),
                         specimenDto.getLastModifiedTime()
                 );

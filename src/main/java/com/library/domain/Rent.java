@@ -8,10 +8,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Rent {
@@ -22,40 +22,40 @@ public class Rent {
     @CreatedDate
     private Instant rentDate;
 
-    private Instant returnDate;
+    private Date returnDate;
 
     @LastModifiedDate
     private Instant lastModifiedData;
 
     @ManyToOne
     @JoinColumn(name = "specimen_id")
-    private List<Specimen> specimens;
+    private Specimen specimen;
 
     @OneToOne
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
     public Rent(
-            List<Specimen> specimens,
+            Specimen specimen,
             Reader reader
     ) {
-        this.specimens = specimens;
+        this.specimen = specimen;
         this.reader = reader;
     }
 
     public Rent(
             Long id,
             Instant rentDate,
-            Instant returnDate,
+            Date returnDate,
             Instant lastModifiedData,
-            List<Specimen> specimens,
+            Specimen specimen,
             Reader reader
     ) {
         this.id = id;
         this.rentDate = rentDate;
         this.returnDate = returnDate;
         this.lastModifiedData = lastModifiedData;
-        this.specimens = specimens;
+        this.specimen = specimen;
         this.reader = reader;
     }
 }

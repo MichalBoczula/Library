@@ -1,45 +1,43 @@
 package com.library.controller;
 
+import com.library.domain.Book;
 import com.library.domain.BookDto;
-import com.library.mapper.BookMapper;
 import com.library.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
 @RestController
-@RequestMapping("/library/")
+@RequestMapping("/library/books")
 public class BookController {
     @Autowired
     private BooksService booksService;
-    @Autowired
-    private BookMapper bookMapper;
 
     @GetMapping
     public List<BookDto> getBooks() {
-        return bookMapper.mapToBookDtoList(booksService.getBooks());
+        return BookDto.fromBookListToBookDtoList(booksService.findAll());
     }
 
     @GetMapping("/{id}")
-    public BookDto getBook(@PathVariable("id") final Long bookId) throws BookNotFoundException {
-        return bookMapper.mapToBookDto(booksService.findBookWithId(bookId).orElseThrow(BookNotFoundException::new));
+    public BookDto getBook(@PathVariable("id") final Long bookId) {
+        final Book book = booksService.findById(bookId);
+        return BookDto.fromBookToBookDto(book);
     }
 
-    @PostMapping("/createBook")
+    @PostMapping("/create")
     public void createBook(@RequestBody final BookDto bookDto) {
-        booksService.saveBook(bookMapper.mapToBook(bookDto));
+        booksService.save(BookDto.fromBookDtoToBook(bookDto));
     }
 
-    @PutMapping("/updateBook/{id}")
-    public BookDto updateBook(@PathVariable("id") final BookDto bookDto) {
-        return bookMapper.mapToBookDto(booksService.saveBook(bookMapper.mapToBook(bookDto)));
-    }
-
-    @RequestMapping(method = DELETE, value = "deleteBook")
-    public void deleteBook(@RequestParam final Long bookId) throws BookNotFoundException {
-        booksService.deleteBook(booksService.findBookWithId(bookId).orElseThrow(BookNotFoundException::new));
+    @PutMapping("/update")
+    public BookDto updateBook(@RequestBody final BookDto bookDto) {
+        return BookDto.fromBookToBookDto(
+                booksService.save(
+                        BookDto.fromBookDtoToBook(
+                                bookDto
+                        )
+                )
+        );
     }
 }

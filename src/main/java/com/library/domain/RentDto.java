@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,9 +13,9 @@ import java.util.stream.Collectors;
 public class RentDto {
     private Long id;
     private Instant rentDate;
-    private Instant returnDate;
+    private Date returnDate;
     private Instant lastModifiedData;
-    private List<SpecimenDto> specimenDtos;
+    private SpecimenDto specimenDto;
     private ReaderDto readerDto;
 
     public static RentDto fromRentToRentDto(Rent rent) {
@@ -24,7 +25,7 @@ public class RentDto {
                         rent.getRentDate(),
                         rent.getReturnDate(),
                         rent.getLastModifiedData(),
-                        SpecimenDto.fromSpecimenListToSpecimenListDto(rent.getSpecimens()),
+                        SpecimenDto.fromSpecimenToSpecimenDto(rent.getSpecimen()),
                         ReaderDto.fromReaderToReaderDto(rent.getReader())
                 );
     }
@@ -36,7 +37,7 @@ public class RentDto {
                         rentDto.getRentDate(),
                         rentDto.getReturnDate(),
                         rentDto.getLastModifiedData(),
-                        SpecimenDto.fromSpecimenDtoListToSpecimenList(rentDto.getSpecimenDtos()),
+                        SpecimenDto.fromSpecimenDtoToSpecimen(rentDto.getSpecimenDto()),
                         ReaderDto.fromReaderDtoToReader(rentDto.getReaderDto())
                 );
     }
@@ -49,8 +50,22 @@ public class RentDto {
                                         rent.getRentDate(),
                                         rent.getReturnDate(),
                                         rent.getLastModifiedData(),
-                                        SpecimenDto.fromSpecimenListToSpecimenListDto(rent.getSpecimens()),
+                                        SpecimenDto.fromSpecimenToSpecimenDto(rent.getSpecimen()),
                                         ReaderDto.fromReaderToReaderDto(rent.getReader())
+                                )
+                        ).collect(Collectors.toList());
+    }
+
+    public static List<Rent> fromRentListDtoToRentList(List<RentDto> rentDtos) {
+        return rentDtos == null ? null :
+                rentDtos.stream()
+                        .map(rent -> new Rent(
+                                        rent.getId(),
+                                        rent.getRentDate(),
+                                        rent.getReturnDate(),
+                                        rent.getLastModifiedData(),
+                                        SpecimenDto.fromSpecimenDtoToSpecimen(rent.getSpecimenDto()),
+                                        ReaderDto.fromReaderDtoToReader(rent.getReaderDto())
                                 )
                         ).collect(Collectors.toList());
     }

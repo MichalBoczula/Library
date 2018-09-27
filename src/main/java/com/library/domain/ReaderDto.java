@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,7 @@ public class ReaderDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private Instant dateOfAccountCreation;
+    private Date dateOfAccountCreation;
     private Instant lastModifiedDate;
 
     public static ReaderDto fromReaderToReaderDto(Reader reader) {

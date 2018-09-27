@@ -1,7 +1,6 @@
 package com.library.domain;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,9 +8,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Specimen {
@@ -29,11 +28,11 @@ public class Specimen {
 
     @OneToMany(
             targetEntity = Rent.class,
-            mappedBy = "specimens",
+            mappedBy = "specimen",
             cascade = CascadeType.MERGE,
             fetch = FetchType.LAZY
     )
-    private Rent rent;
+    private List<Rent> rents;
 
     @CreatedDate
     private Instant createdTime;
@@ -45,12 +44,14 @@ public class Specimen {
             Long id,
             SpecimenStatus status,
             Book book,
+            List<Rent> rents,
             Instant createdTime,
             Instant lastModifiedTime
     ) {
         this.id = id;
         this.status = status;
         this.book = book;
+        this.rents = rents;
         this.createdTime = createdTime;
         this.lastModifiedTime = lastModifiedTime;
     }
