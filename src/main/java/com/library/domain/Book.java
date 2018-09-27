@@ -1,6 +1,6 @@
 package com.library.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,24 +8,24 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "books")
 public class Book {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "book_id", unique = true)
+    @GeneratedValue()
     private Long id;
+
     @NotNull
-    @Column(name = "title")
     private String title;
+
     @NotNull
-    @Column(name = "author")
     private String author;
+
     @NotNull
-    @Column(name = "publication_date")
     private String dateOfPublication;
+
     @OneToMany(
             targetEntity = Specimen.class,
             mappedBy = "book",

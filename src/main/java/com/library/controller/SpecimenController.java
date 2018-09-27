@@ -1,50 +1,42 @@
 package com.library.controller;
 
+import com.library.domain.Specimen;
 import com.library.domain.SpecimenDto;
-import com.library.mapper.SpecimenMapper;
-import com.library.service.DbServiceSpecimen;
+import com.library.service.SpecimenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
 @RestController
-@RequestMapping("/library/books")
+@RequestMapping("/library/")
 public class SpecimenController {
     @Autowired
-    private DbServiceSpecimen dbServiceSpecimen;
-    @Autowired
-    private SpecimenMapper specimenMapper;
+    private SpecimenService specimenService;
 
-    @RequestMapping(method = GET, value = "getSpecimens")
+    @GetMapping
     public List<SpecimenDto> getSpecimens() {
-        return specimenMapper.mapToSpecimenDtoList(dbServiceSpecimen.findAll());
+        final List<Specimen> specimens = specimenService.findAll();
+        return SpecimenDto.fromSpecimenListToSpecimenListDto(specimens);
     }
 
-    @RequestMapping(method = GET, value = "getSpecimen")
-    public SpecimenDto getSpecimen(@RequestParam final Long specimenId) throws SpecimenNotFoundException {
-        return specimenMapper.mapToSpecimenDto(dbServiceSpecimen.findById(specimenId).orElseThrow(SpecimenNotFoundException::new));
+    @GetMapping("{id}")
+    public SpecimenDto getSpecimen(@PathVariable("id") final Long specimenId) {
+        final Specimen specimen = specimenService.findById(specimenId);
+        return SpecimenDto.fromSpecimenToSpecimenDto(specimen);
     }
 
-    @RequestMapping(method = POST, value = "createSpecimen", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createSpecimen(@RequestBody final SpecimenDto specimenDto){
-        dbServiceSpecimen.save(specimenMapper.mapToSpecimen(specimenDto));
+    @PostMapping("/createSpecimen")
+    public void createSpecimen(@RequestBody final SpecimenDto specimenDto) {
+        final Specimen specimen = SpecimenDto.fromSpecimenDtoToSpecimen(specimenDto);
+        specimenService.save(specimen);
     }
 
-    @RequestMapping(method = DELETE, value = "deleteSpecimen")
-    public void deleteSpecimen(@RequestParam final Long specimenId) throws SpecimenNotFoundException {
-        dbServiceSpecimen.delete(dbServiceSpecimen.findById(specimenId).orElseThrow(SpecimenNotFoundException::new));
-    }
-
-    @RequestMapping(method = PUT, value = "updateSpecimen")
-    public SpecimenDto updateSpecimen(@RequestBody final SpecimenDto specimenDto){
-        return specimenMapper.mapToSpecimenDto(dbServiceSpecimen.save(specimenMapper.mapToSpecimen(specimenDto)));
+    @PutMapping("/return/{id}")
+    public SpecimenDto returnSpecimen(@PathVariable("id") final Long specimenId) {
+        final Specimen specimen = specimenService.findById(specimenId);
+        specimen.setStatus(Specimen.SpecimenStatus.IN_LIBRARY);
+        return SpecimenDto.fromSpecimenToSpecimenDto(specimen);
     }
 
 }

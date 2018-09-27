@@ -1,40 +1,65 @@
 package com.library.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.Session;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "specimens")
+@EntityListeners(AuditingEntityListener.class)
 public class Specimen {
+
     @Id
     @GeneratedValue
-    @Column(name = "specimen_id")
     private Long id;
+
     @NotNull
-    @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private SpecimenStatus status;
+
     @ManyToOne
-    @JoinColumn(name = "book_id")
     private Book book;
 
-    public Specimen(String status, Book book) {
-        this.status = status;
-        this.book = book;
-    }
+    @CreatedDate
+    private Instant createdTime;
 
-    public Specimen(Long id, String status, Book book) {
+    @LastModifiedDate
+    private Instant lastModifiedTime;
+
+    public Specimen(
+            Long id,
+            SpecimenStatus status,
+            Book book,
+            Instant createdTime,
+            Instant lastModifiedTime
+    ) {
         this.id = id;
         this.status = status;
         this.book = book;
+        this.createdTime = createdTime;
+        this.lastModifiedTime = lastModifiedTime;
     }
 
-    public void setStatus(String status) {
+    public Specimen(
+            SpecimenStatus status,
+                    Book book,
+                    Instant createdTime,
+                    Instant lastModifiedTime
+    ) {
         this.status = status;
+        this.book = book;
+        this.createdTime = createdTime;
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    public static enum SpecimenStatus {
+        IN_LIBRARY, RENTED, DESTROYED
     }
 }

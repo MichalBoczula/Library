@@ -1,24 +1,27 @@
 package com.library.service;
 
+import com.library.controller.SpecimenNotFoundException;
 import com.library.domain.Specimen;
 import com.library.repository.SpecimenRepositoryDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class DbServiceSpecimen {
-    @Autowired
-    private SpecimenRepositoryDao specimenRepositoryDao;
+@Transactional
+@RequiredArgsConstructor
+public class SpecimenService {
+    private final SpecimenRepositoryDao specimenRepositoryDao;
 
     public List<Specimen> findAll() {
         return specimenRepositoryDao.findAll();
     }
 
-    public Optional<Specimen> findById(final Long specimenId) {
-        return specimenRepositoryDao.findById(specimenId);
+    public Specimen findById(final Long specimenId) {
+        return specimenRepositoryDao.findById(specimenId)
+                .orElseThrow(() -> new SpecimenNotFoundException(specimenId));
     }
 
     public Specimen save(final Specimen specimen) {

@@ -12,5 +12,15 @@ public class ReaderDto {
     private String firstName;
     private String lastName;
     private Date dateOfAccountCreation;
+
+    public static ReaderDto fromReaderToReaderDto(Reader reader){
+        return reader == null ? null :
+                new ReaderDto(
+                        reader.getId(),
+                        reader.getFirstName(),
+                        reader.getFirstName(),
+                        reader.getDateOfAccountCreation()
+                );
+    }
 }
 
