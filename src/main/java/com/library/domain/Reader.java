@@ -1,41 +1,59 @@
 package com.library.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.Instant;
 
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "readers")
+@EntityListeners(AuditingEntityListener.class)
 public class Reader {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "reader_id", unique = true)
-    private Long id;
-    @NotNull
-    @Column(name = "first_name")
-    private String firstName;
-    @NotNull
-    @Column(name = "last_name")
-    private String lastName;
-    @NotNull
-    @Column(name = "date_of_account_creation")
-    private Date dateOfAccountCreation;
 
-    public Reader(String firstName, String lastName) {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @NotNull
+    private String firstName;
+
+    @NotNull
+    private String lastName;
+
+    @CreatedDate
+    private Instant dateOfAccountCreation;
+
+    @LastModifiedDate
+    private Instant lastModifiedDate;
+
+    public Reader(
+            String firstName,
+            String lastName
+    ) {
         this.firstName = firstName;
         this.lastName = lastName;
-        dateOfAccountCreation = new Date();
     }
 
-    public Reader(Long id, String firstName, String lastName, Date dateOfAccountCreation) {
+    public Reader(
+            Long id,
+            String firstName,
+            String lastName,
+            Instant dateOfAccountCreation,
+            Instant lastModifiedDate
+    ) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfAccountCreation = dateOfAccountCreation;
+        this.lastModifiedDate = lastModifiedDate;
     }
 }

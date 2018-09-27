@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SpecimenRepositoryDao extends CrudRepository<Specimen, Long> {
+public interface SpecimenRepository extends CrudRepository<Specimen, Long> {
     @Override
     List<Specimen> findAll();
 

@@ -15,23 +15,23 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BookRepositoryDaoTestSuite {
+public class BookRepositoryTestSuite {
     @Autowired
-    private BookRepositoryDao bookRepositoryDao;
+    private BookRepository bookRepository;
 
     @Test
     public void save() {
         //given
         final Book book = new Book("test title", "test author", "2000");
         //when
-        final Book testBook = bookRepositoryDao.save(book);
+        final Book testBook = bookRepository.save(book);
         //then
-        assertEquals(1, bookRepositoryDao.count());
+        assertEquals(1, bookRepository.count());
         assertEquals(book.getTitle(), testBook.getTitle());
         assertEquals(book.getAuthor(), testBook.getAuthor());
         assertEquals(book.getDateOfPublication(), testBook.getDateOfPublication());
         //cleanUp
-        bookRepositoryDao.delete(book);
+        bookRepository.delete(book);
     }
 
     @Test
@@ -44,11 +44,11 @@ public class BookRepositoryDaoTestSuite {
         bookList.add(book1);
         bookList.add(book2);
         bookList.add(book3);
-        bookRepositoryDao.save(book1);
-        bookRepositoryDao.save(book2);
-        bookRepositoryDao.save(book3);
+        bookRepository.save(book1);
+        bookRepository.save(book2);
+        bookRepository.save(book3);
         //when
-        final List<Book> testList = bookRepositoryDao.findAll();
+        final List<Book> testList = bookRepository.findAll();
         //then
         assertEquals(3, testList.size());
         testList.forEach(book -> {
@@ -57,23 +57,23 @@ public class BookRepositoryDaoTestSuite {
             assertEquals("2000", book.getDateOfPublication());
         });
         //cleanUp
-        bookRepositoryDao.delete(book1);
-        bookRepositoryDao.delete(book2);
-        bookRepositoryDao.delete(book3);
+        bookRepository.delete(book1);
+        bookRepository.delete(book2);
+        bookRepository.delete(book3);
     }
 
     @Test
     public void findById(){
         //given
         final Book book = new Book("test", "test", "2000");
-        bookRepositoryDao.save(book);
+        bookRepository.save(book);
         //when
-        final Optional<Book> testBook = bookRepositoryDao.findById(book.getId());
+        final Optional<Book> testBook = bookRepository.findById(book.getId());
         //then
         assertNotNull(testBook);
         assertEquals(book.getId(), testBook.get().getId());
         //cleanUp
-        bookRepositoryDao.delete(book);
+        bookRepository.delete(book);
     }
 
 }

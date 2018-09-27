@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +20,15 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RentRepositoryDaoTestSuite {
+public class RentRepositoryTestSuite {
     @Autowired
-    private BookRepositoryDao bookRepositoryDao;
+    private BookRepository bookRepository;
     @Autowired
-    private SpecimenRepositoryDao specimenRepositoryDao;
+    private SpecimenRepository specimenRepository;
     @Autowired
-    private ReaderRepositoryDao readerRepositoryDao;
+    private ReaderRepository readerRepository;
     @Autowired
-    private RentRepositoryDao rentRepositoryDao;
+    private RentRepository rentRepository;
 
     private Book book1;
     private Book book2;
@@ -50,51 +49,51 @@ public class RentRepositoryDaoTestSuite {
         rent1 = new Rent(specimen1, reader);
         rent2 = new Rent(specimen2, reader);
         //when in save
-        bookRepositoryDao.save(book1);
-        bookRepositoryDao.save(book2);
-        specimenRepositoryDao.save(specimen1);
-        specimenRepositoryDao.save(specimen2);
-        readerRepositoryDao.save(reader);
-        rentRepositoryDao.save(rent1);
-        rentRepositoryDao.save(rent2);
+        bookRepository.save(book1);
+        bookRepository.save(book2);
+        specimenRepository.save(specimen1);
+        specimenRepository.save(specimen2);
+        readerRepository.save(reader);
+        rentRepository.save(rent1);
+        rentRepository.save(rent2);
     }
 
     @After
     public void cleanUp() {
         //cleanUp
-        rentRepositoryDao.delete(rent1);
-        rentRepositoryDao.delete(rent2);
-        specimenRepositoryDao.delete(specimen1);
-        specimenRepositoryDao.delete(specimen2);
-        bookRepositoryDao.delete(book1);
-        bookRepositoryDao.delete(book2);
-        readerRepositoryDao.delete(reader);
+        rentRepository.delete(rent1);
+        rentRepository.delete(rent2);
+        specimenRepository.delete(specimen1);
+        specimenRepository.delete(specimen2);
+        bookRepository.delete(book1);
+        bookRepository.delete(book2);
+        readerRepository.delete(reader);
     }
 
     @Test
     public void save() {
         //then
-        assertEquals(2, rentRepositoryDao.count());
-        assertEquals(rent1.getReader().getId(), rentRepositoryDao.findOne(rent1.getId()).getReader().getId());
-        assertEquals(rent1.getRentDate().getDate(), rentRepositoryDao.findOne(rent1.getId()).getRentDate().getDate());
-        assertEquals(rent1.getSpecimen().getId(), rentRepositoryDao.findOne(rent1.getId()).getSpecimen().getId());
+        assertEquals(2, rentRepository.count());
+        assertEquals(rent1.getReader().getId(), rentRepository.findOne(rent1.getId()).getReader().getId());
+        assertEquals(rent1.getRentDate().getDate(), rentRepository.findOne(rent1.getId()).getRentDate().getDate());
+        assertEquals(rent1.getSpecimen().getId(), rentRepository.findOne(rent1.getId()).getSpecimen().getId());
         assertEquals(null, rent1.getReturnDate());
     }
 
     @Test
     public void findAll() {
         //when
-        final List<Rent> rentList = rentRepositoryDao.findAll();
+        final List<Rent> rentList = rentRepository.findAll();
         assertEquals(2, rentList.size());
     }
 
     @Test
     public void findById() {
         //when
-        final Optional<Rent> testR1 = rentRepositoryDao.findById(rent1.getId());
-        final Optional<Rent> testR2 = rentRepositoryDao.findById(rent2.getId());
+        final Optional<Rent> testR1 = rentRepository.findById(rent1.getId());
+        final Optional<Rent> testR2 = rentRepository.findById(rent2.getId());
         //then
-        assertEquals(2, rentRepositoryDao.count());
+        assertEquals(2, rentRepository.count());
         assertEquals(rent1.getId(), testR1.get().getId());
         assertEquals(rent2.getId(), testR2.get().getId());
     }
@@ -102,7 +101,7 @@ public class RentRepositoryDaoTestSuite {
     @Test
     public void setReturnDate(){
         //when
-        rentRepositoryDao.setReturnDate(rent1.getId());
+        rentRepository.setReturnDate(rent1.getId());
         //then
         assertNotNull(rent1.getReturnDate());
         //cleanUp

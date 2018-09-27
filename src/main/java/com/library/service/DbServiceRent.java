@@ -1,31 +1,34 @@
 package com.library.service;
 
+import com.library.controller.ReaderNotFoundException;
 import com.library.domain.Rent;
-import com.library.repository.RentRepositoryDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.library.repository.RentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class DbServiceRent {
-    @Autowired
-    private RentRepositoryDao rentRepositoryDao;
+    private final RentRepository rentRepository;
 
     public List<Rent> findAll() {
-        return rentRepositoryDao.findAll();
+        return rentRepository.findAll();
     }
 
-    public Optional<Rent> findById(final Long rentId) {
-        return rentRepositoryDao.findById(rentId);
+    public Rent findById(final Long rentId) {
+        return rentRepository.findById(rentId)
+                .orElseThrow(() -> new ReaderNotFoundException(rentId));
     }
 
     public Rent save(final Rent rent) {
-        return rentRepositoryDao.save(rent);
+        return rentRepository.save(rent);
     }
 
     public void delete(final Rent rent) {
-        rentRepositoryDao.delete(rent);
+        rentRepository.delete(rent);
     }
 }

@@ -2,7 +2,7 @@ package com.library.controller;
 
 import com.library.domain.ReaderDto;
 import com.library.mapper.ReaderMapper;
-import com.library.service.DbServiceReaders;
+import com.library.service.ReadersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,32 +18,32 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/library/readers")
 public class ReaderController {
     @Autowired
-    private DbServiceReaders dbServiceReaders;
+    private ReadersService readersService;
     @Autowired
     private ReaderMapper readerMapper;
 
     @RequestMapping(method = GET, value = "getReaders")
     public List<ReaderDto> getBooks() {
-        return readerMapper.mapToReaderDtoList(dbServiceReaders.getReaders());
+        return readerMapper.mapToReaderDtoList(readersService.getReaders());
     }
 
     @RequestMapping(method = GET, value = "getReader")
     public ReaderDto getReader(@RequestParam final Long readerId) throws ReaderNotFoundException {
-        return readerMapper.mapToReaderDto(dbServiceReaders.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
+        return readerMapper.mapToReaderDto(readersService.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
     }
 
     @RequestMapping(method = POST, value = "createReader", consumes = APPLICATION_JSON_VALUE)
     public void createReader(@RequestBody final ReaderDto readerDto) {
-        dbServiceReaders.save(readerMapper.mapToReader(readerDto));
+        readersService.save(readerMapper.mapToReader(readerDto));
     }
 
     @RequestMapping(method = DELETE, value = "deleteReader")
     public void deleteReader(@RequestParam final Long readerId) throws ReaderNotFoundException {
-        dbServiceReaders.delete(dbServiceReaders.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
+        readersService.delete(readersService.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
     }
 
     @RequestMapping(method = PUT, value = "updateReader")
     public ReaderDto updateReader(@RequestParam final ReaderDto readerDto) {
-        return readerMapper.mapToReaderDto(dbServiceReaders.save(readerMapper.mapToReader(readerDto)));
+        return readerMapper.mapToReaderDto(readersService.save(readerMapper.mapToReader(readerDto)));
     }
 }

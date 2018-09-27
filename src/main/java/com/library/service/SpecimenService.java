@@ -2,7 +2,7 @@ package com.library.service;
 
 import com.library.controller.SpecimenNotFoundException;
 import com.library.domain.Specimen;
-import com.library.repository.SpecimenRepositoryDao;
+import com.library.repository.SpecimenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,22 +13,22 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class SpecimenService {
-    private final SpecimenRepositoryDao specimenRepositoryDao;
+    private final SpecimenRepository specimenRepository;
 
     public List<Specimen> findAll() {
-        return specimenRepositoryDao.findAll();
+        return specimenRepository.findAll();
     }
 
     public Specimen findById(final Long specimenId) {
-        return specimenRepositoryDao.findById(specimenId)
+        return specimenRepository.findById(specimenId)
                 .orElseThrow(() -> new SpecimenNotFoundException(specimenId));
     }
 
     public Specimen save(final Specimen specimen) {
-        return specimenRepositoryDao.save(specimen);
+        return specimenRepository.save(specimen);
     }
 
     public void delete(final Specimen specimen) {
-        specimenRepositoryDao.delete(specimen);
+        specimenRepository.delete(specimen);
     }
 }

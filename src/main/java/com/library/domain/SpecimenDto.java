@@ -41,6 +41,19 @@ public class SpecimenDto {
                         ).collect(Collectors.toList());
     }
 
+    public static List<Specimen> fromSpecimenDtoListToSpecimenList(final List<SpecimenDto> specimenDtos) {
+        return specimenDtos == null ? null :
+                specimenDtos.stream()
+                        .map(specimenDto -> new Specimen(
+                                        specimenDto.getId(),
+                                        specimenDto.getStatus(),
+                                        BookDto.fromBookDtoToBook(specimenDto.getBookDto()),
+                                        specimenDto.getCreatedTime(),
+                                        specimenDto.getLastModifiedTime()
+                                )
+                        ).collect(Collectors.toList());
+    }
+
     public static Specimen fromSpecimenDtoToSpecimen(final SpecimenDto specimenDto) {
         return specimenDto == null ? null :
                 new Specimen(

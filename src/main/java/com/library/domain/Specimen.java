@@ -27,6 +27,14 @@ public class Specimen {
     @ManyToOne
     private Book book;
 
+    @OneToMany(
+            targetEntity = Rent.class,
+            mappedBy = "specimens",
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.LAZY
+    )
+    private Rent rent;
+
     @CreatedDate
     private Instant createdTime;
 
@@ -49,9 +57,9 @@ public class Specimen {
 
     public Specimen(
             SpecimenStatus status,
-                    Book book,
-                    Instant createdTime,
-                    Instant lastModifiedTime
+            Book book,
+            Instant createdTime,
+            Instant lastModifiedTime
     ) {
         this.status = status;
         this.book = book;

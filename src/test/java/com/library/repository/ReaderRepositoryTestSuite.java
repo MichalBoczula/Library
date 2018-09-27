@@ -1,7 +1,6 @@
 package com.library.repository;
 
 import com.library.domain.Reader;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +14,20 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ReaderRepositoryDaoTestSuite {
+public class ReaderRepositoryTestSuite {
     @Autowired
-    private ReaderRepositoryDao readerRepositoryDao;
+    private ReaderRepository readerRepository;
 
     @Test
     public void save() {
         //given
         final Reader reader = new Reader("test1", "test1");
         //when
-        readerRepositoryDao.save(reader);
+        readerRepository.save(reader);
         //then
-        assertEquals(1, readerRepositoryDao.count());
+        assertEquals(1, readerRepository.count());
         //cleanUp
-        readerRepositoryDao.delete(reader);
+        readerRepository.delete(reader);
     }
 
     @Test
@@ -37,11 +36,11 @@ public class ReaderRepositoryDaoTestSuite {
         final Reader reader1 = new Reader("test", "test test");
         final Reader reader2 = new Reader("test", "test test");
         final Reader reader3 = new Reader("test", "test test");
-        readerRepositoryDao.save(reader1);
-        readerRepositoryDao.save(reader2);
-        readerRepositoryDao.save(reader3);
+        readerRepository.save(reader1);
+        readerRepository.save(reader2);
+        readerRepository.save(reader3);
         //when
-        final List<Reader> testList = readerRepositoryDao.findAll();
+        final List<Reader> testList = readerRepository.findAll();
         //then
         assertEquals(3, testList.size());
         testList.forEach(reader -> {
@@ -49,23 +48,23 @@ public class ReaderRepositoryDaoTestSuite {
             assertEquals("test test", reader.getLastName());
         });
         //cleanUp
-        readerRepositoryDao.delete(reader1);
-        readerRepositoryDao.delete(reader2);
-        readerRepositoryDao.delete(reader3);
+        readerRepository.delete(reader1);
+        readerRepository.delete(reader2);
+        readerRepository.delete(reader3);
     }
 
     @Test
     public void findById() {
         //given
         final Reader reader1 = new Reader("test", "test test");
-        readerRepositoryDao.save(reader1);
+        readerRepository.save(reader1);
         //when
-        final Optional<Reader> testReader = readerRepositoryDao.findById(reader1.getId());
+        final Optional<Reader> testReader = readerRepository.findById(reader1.getId());
         //then
         assertEquals(reader1.getId(), testReader.get().getId());
         assertEquals(reader1.getFirstName(), testReader.get().getFirstName());
         assertEquals(reader1.getLastName(), testReader.get().getLastName());
         //cleanUp
-        readerRepositoryDao.delete(reader1);
+        readerRepository.delete(reader1);
     }
 }
