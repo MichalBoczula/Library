@@ -35,7 +35,7 @@ public class RentController {
         );
     }
 
-    @PutMapping("/return/{id}")
+    @PutMapping("/update")
     public RentDto updateRent(@RequestBody final Rent rent) {
         return RentDto.fromRentToRentDto(
                 rentService.save(rent)
