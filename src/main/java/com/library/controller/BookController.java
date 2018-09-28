@@ -14,13 +14,10 @@ public class BookController {
     @Autowired
     private BooksService booksService;
 
-    @RequestMapping("getBooks")
-    public List<BookDto> getBooks1(){
-        return BookDto.fromBookListToBookDtoList(booksService.findAll());    }
-
-    @GetMapping
+     @GetMapping
     public List<BookDto> getBooks() {
-        return BookDto.fromBookListToBookDtoList(booksService.findAll());
+         final List<Book> books = booksService.findAll();
+         return BookDto.fromBookListToBookDtoList(books);
     }
 
     @GetMapping("/{id}")
@@ -30,18 +27,16 @@ public class BookController {
     }
 
     @PostMapping("/create")
-    public void createBook(@RequestBody final BookDto bookDto) {
-        booksService.save(BookDto.fromBookDtoToBook(bookDto));
+    public BookDto createBook(@RequestBody final Book book) {
+        return BookDto.fromBookToBookDto(
+                booksService.save(book)
+        );
     }
 
     @PutMapping("/update")
-    public BookDto updateBook(@RequestBody final BookDto bookDto) {
+    public BookDto updateBook(@RequestBody final Book book) {
         return BookDto.fromBookToBookDto(
-                booksService.save(
-                        BookDto.fromBookDtoToBook(
-                                bookDto
-                        )
-                )
+                booksService.save(book)
         );
     }
 }

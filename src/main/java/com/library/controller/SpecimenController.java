@@ -26,17 +26,18 @@ public class SpecimenController {
         return SpecimenDto.fromSpecimenToSpecimenDto(specimen);
     }
 
-    @PostMapping("/createSpecimen")
-    public void createSpecimen(@RequestBody final SpecimenDto specimenDto) {
-        final Specimen specimen = SpecimenDto.fromSpecimenDtoToSpecimen(specimenDto);
-        specimenService.save(specimen);
+    @PostMapping("/create")
+    public SpecimenDto createSpecimen(@RequestBody final Specimen specimen) {
+        return SpecimenDto.fromSpecimenToSpecimenDto(
+                specimenService.save(specimen)
+        );
     }
 
-    @PutMapping("/return/{id}")
-    public SpecimenDto returnSpecimen(@PathVariable("id") final Long specimenId) {
-        final Specimen specimen = specimenService.findById(specimenId);
-        specimen.setStatus(Specimen.SpecimenStatus.IN_LIBRARY);
-        return SpecimenDto.fromSpecimenToSpecimenDto(specimen);
+    @PutMapping("/update")
+    public SpecimenDto returnSpecimen(@RequestBody final Specimen specimen) {
+        return SpecimenDto.fromSpecimenToSpecimenDto(
+                specimenService.save(specimen)
+        );
     }
 
 }

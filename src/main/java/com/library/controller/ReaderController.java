@@ -16,22 +16,30 @@ public class ReaderController {
 
     @GetMapping
     public List<ReaderDto> getBooks() {
-        return ReaderDto.formReaderListToReaderDtoList(readersService.findAll());
+        return ReaderDto.formReaderListToReaderDtoList(
+                readersService.findAll()
+        );
     }
 
     @GetMapping("{id}")
     public ReaderDto getReader(@PathVariable("id") final Long readerId) {
-        return ReaderDto.fromReaderToReaderDto(readersService.findByID(readerId));
+        return ReaderDto.fromReaderToReaderDto(
+                readersService.findByID(readerId)
+        );
     }
 
     @PostMapping("/create")
     public ReaderDto createReader(@RequestBody final Reader reader) {
-        return ReaderDto.fromReaderToReaderDto(readersService.save(reader));
+        return ReaderDto.fromReaderToReaderDto(
+                readersService.save(reader)
+        );
     }
 
     @PutMapping("/update")
     public ReaderDto updateReader(@RequestBody final Reader reader) {
-        return ReaderDto.fromReaderToReaderDto(readersService.save(reader));
+        return ReaderDto.fromReaderToReaderDto(
+                readersService.save(reader)
+        );
     }
 }
 
