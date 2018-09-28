@@ -25,20 +25,13 @@ public class ReaderController {
     }
 
     @PostMapping("/create")
-    public void createReader(@RequestBody final ReaderDto readerDto) {
-        final Reader reader = ReaderDto.fromReaderDtoToReader(readerDto);
-        readersService.save(reader);
+    public ReaderDto createReader(@RequestBody final Reader reader) {
+        return ReaderDto.fromReaderToReaderDto(readersService.save(reader));
     }
 
     @PutMapping("/update")
-    public ReaderDto updateReader(@RequestParam final ReaderDto readerDto) {
-        return ReaderDto.fromReaderToReaderDto(
-                readersService.save(
-                        ReaderDto.fromReaderDtoToReader(
-                                readerDto
-                        )
-                )
-        );
+    public ReaderDto updateReader(@RequestBody final Reader reader) {
+        return ReaderDto.fromReaderToReaderDto(readersService.save(reader));
     }
 }
 

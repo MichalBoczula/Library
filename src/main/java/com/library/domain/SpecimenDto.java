@@ -13,58 +13,40 @@ public class SpecimenDto {
     private Long id;
     private Specimen.SpecimenStatus status;
     private BookDto bookDto;
-    private List<RentDto> rents;
     private Instant createdTime;
     private Instant lastModifiedTime;
 
 
-    public static SpecimenDto fromSpecimenToSpecimenDto(final Specimen specimen) {
+    public static SpecimenDto fromSpecimenToSpecimenDto(Specimen specimen) {
         return specimen == null ? null :
                 new SpecimenDto(
                         specimen.getId(),
                         specimen.getStatus(),
                         BookDto.fromBookToBookDto(specimen.getBook()),
-                        RentDto.fromRentListToRentDtoList(specimen.getRents()),
                         specimen.getCreatedTime(),
                         specimen.getLastModifiedTime()
                 );
     }
 
-    public static List<SpecimenDto> fromSpecimenListToSpecimenListDto(final List<Specimen> specimens) {
+    public static List<SpecimenDto> fromSpecimenListToSpecimenDtoList(List<Specimen> specimens) {
         return specimens == null ? null :
                 specimens.stream()
                         .map(specimen -> new SpecimenDto(
                                         specimen.getId(),
                                         specimen.getStatus(),
                                         BookDto.fromBookToBookDto(specimen.getBook()),
-                                        RentDto.fromRentListToRentDtoList(specimen.getRents()),
                                         specimen.getCreatedTime(),
                                         specimen.getLastModifiedTime()
                                 )
                         ).collect(Collectors.toList());
     }
 
-    public static List<Specimen> fromSpecimenDtoListToSpecimenList(final List<SpecimenDto> specimenDtos) {
-        return specimenDtos == null ? null :
-                specimenDtos.stream()
-                        .map(specimenDto -> new Specimen(
-                                        specimenDto.getId(),
-                                        specimenDto.getStatus(),
-                                        BookDto.fromBookDtoToBook(specimenDto.getBookDto()),
-                                        RentDto.fromRentListDtoToRentList(specimenDto.getRents()),
-                                        specimenDto.getCreatedTime(),
-                                        specimenDto.getLastModifiedTime()
-                                )
-                        ).collect(Collectors.toList());
-    }
-
-    public static Specimen fromSpecimenDtoToSpecimen(final SpecimenDto specimenDto) {
+    public static Specimen fromSpecimenDtoToSpecimen(SpecimenDto specimenDto) {
         return specimenDto == null ? null :
                 new Specimen(
                         specimenDto.getId(),
                         specimenDto.getStatus(),
                         BookDto.fromBookDtoToBook(specimenDto.getBookDto()),
-                        RentDto.fromRentListDtoToRentList(specimenDto.getRents()),
                         specimenDto.getCreatedTime(),
                         specimenDto.getLastModifiedTime()
                 );

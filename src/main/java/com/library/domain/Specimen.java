@@ -44,28 +44,22 @@ public class Specimen {
             Long id,
             SpecimenStatus status,
             Book book,
-            List<Rent> rents,
             Instant createdTime,
             Instant lastModifiedTime
     ) {
         this.id = id;
         this.status = status;
         this.book = book;
-        this.rents = rents;
         this.createdTime = createdTime;
         this.lastModifiedTime = lastModifiedTime;
     }
 
     public Specimen(
             SpecimenStatus status,
-            Book book,
-            Instant createdTime,
-            Instant lastModifiedTime
+            Book book
     ) {
         this.status = status;
         this.book = book;
-        this.createdTime = createdTime;
-        this.lastModifiedTime = lastModifiedTime;
     }
 
     public static enum SpecimenStatus {

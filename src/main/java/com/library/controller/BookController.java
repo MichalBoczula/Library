@@ -14,6 +14,10 @@ public class BookController {
     @Autowired
     private BooksService booksService;
 
+    @RequestMapping("getBooks")
+    public List<BookDto> getBooks1(){
+        return BookDto.fromBookListToBookDtoList(booksService.findAll());    }
+
     @GetMapping
     public List<BookDto> getBooks() {
         return BookDto.fromBookListToBookDtoList(booksService.findAll());

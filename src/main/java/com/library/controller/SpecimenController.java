@@ -17,7 +17,7 @@ public class SpecimenController {
     @GetMapping
     public List<SpecimenDto> getSpecimens() {
         final List<Specimen> specimens = specimenService.findAll();
-        return SpecimenDto.fromSpecimenListToSpecimenListDto(specimens);
+        return SpecimenDto.fromSpecimenListToSpecimenDtoList(specimens);
     }
 
     @GetMapping("{id}")

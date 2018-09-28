@@ -13,39 +13,35 @@ public class BookDto {
     private String title;
     private String author;
     private String dateOfPublication;
-    private List<SpecimenDto> specimens;
 
-    public static BookDto fromBookToBookDto(final Book book) {
+    public static BookDto fromBookToBookDto(Book book) {
         return book == null ? null :
                 new BookDto(
                         book.getId(),
                         book.getTitle(),
                         book.getAuthor(),
-                        book.getDateOfPublication(),
-                        SpecimenDto.fromSpecimenListToSpecimenListDto(book.getSpecimens())
+                        book.getDateOfPublication()
                 );
     }
 
-    public static Book fromBookDtoToBook(final BookDto bookDto) {
+    public static Book fromBookDtoToBook(BookDto bookDto) {
         return bookDto == null ? null :
                 new Book(
                         bookDto.getId(),
                         bookDto.getTitle(),
                         bookDto.getAuthor(),
-                        bookDto.getDateOfPublication(),
-                        SpecimenDto.fromSpecimenDtoListToSpecimenList(bookDto.getSpecimens())
+                        bookDto.getDateOfPublication()
                 );
     }
 
-    public static List<BookDto> fromBookListToBookDtoList(final List<Book> books) {
+    public static List<BookDto> fromBookListToBookDtoList(List<Book> books) {
         return books == null ? null :
                 books.stream()
                         .map(book -> new BookDto(
                                         book.getId(),
                                         book.getTitle(),
                                         book.getAuthor(),
-                                        book.getDateOfPublication(),
-                                        SpecimenDto.fromSpecimenListToSpecimenListDto(book.getSpecimens())
+                                        book.getDateOfPublication()
                                 )
                         ).collect(Collectors.toList());
     }
