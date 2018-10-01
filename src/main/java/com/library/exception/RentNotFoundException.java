@@ -1,4 +1,4 @@
-package com.library.controller;
+package com.library.exception;
 
 public class RentNotFoundException extends RuntimeException {
     public RentNotFoundException(Long id) {

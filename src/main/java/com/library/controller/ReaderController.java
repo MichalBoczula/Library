@@ -1,18 +1,17 @@
 package com.library.controller;
 
-import com.library.domain.Reader;
-import com.library.domain.ReaderDto;
+import com.library.dto.ReaderDto;
 import com.library.service.ReadersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/library/readers")
+@RequiredArgsConstructor
 public class ReaderController {
-    @Autowired
-    private ReadersService readersService;
+    private final ReadersService readersService;
 
     @GetMapping
     public List<ReaderDto> getBooks() {
@@ -21,24 +20,27 @@ public class ReaderController {
         );
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ReaderDto getReader(@PathVariable("id") final Long readerId) {
         return ReaderDto.fromReaderToReaderDto(
                 readersService.findByID(readerId)
         );
     }
 
-    @PostMapping("/create")
-    public ReaderDto createReader(@RequestBody final Reader reader) {
+    @PostMapping
+    public ReaderDto createReader(@RequestBody final ReaderDto readerDto) {
         return ReaderDto.fromReaderToReaderDto(
-                readersService.save(reader)
+                readersService.save(readerDto)
         );
     }
 
-    @PutMapping("/update")
-    public ReaderDto updateReader(@RequestBody final Reader reader) {
+    @PutMapping("/{id}")
+    public ReaderDto updateReader(
+            @PathVariable("id") final Long readerId,
+            @RequestBody final ReaderDto readerDto
+    ) {
         return ReaderDto.fromReaderToReaderDto(
-                readersService.save(reader)
+                readersService.save(readerDto)
         );
     }
 }

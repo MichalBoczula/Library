@@ -1,7 +1,7 @@
 package com.library.controller;
 
 import com.library.domain.Specimen;
-import com.library.domain.SpecimenDto;
+import com.library.dto.SpecimenDto;
 import com.library.service.SpecimenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +20,26 @@ public class SpecimenController {
         return SpecimenDto.fromSpecimenListToSpecimenDtoList(specimens);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public SpecimenDto getSpecimen(@PathVariable("id") final Long specimenId) {
         final Specimen specimen = specimenService.findById(specimenId);
         return SpecimenDto.fromSpecimenToSpecimenDto(specimen);
     }
 
-    @PostMapping("/create")
-    public SpecimenDto createSpecimen(@RequestBody final Specimen specimen) {
+    @PostMapping
+    public SpecimenDto createSpecimen(@RequestBody final SpecimenDto specimenDto) {
         return SpecimenDto.fromSpecimenToSpecimenDto(
-                specimenService.save(specimen)
+                specimenService.save(specimenDto)
         );
     }
 
-    @PutMapping("/update")
-    public SpecimenDto returnSpecimen(@RequestBody final Specimen specimen) {
+    @PutMapping("/{id}")
+    public SpecimenDto returnSpecimen(
+            @PathVariable("id") final Long specimenId,
+            @RequestBody final SpecimenDto specimenDto
+    ) {
         return SpecimenDto.fromSpecimenToSpecimenDto(
-                specimenService.save(specimen)
+                specimenService.save(specimenDto)
         );
     }
 

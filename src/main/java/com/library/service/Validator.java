@@ -1,10 +1,9 @@
-package com.library.controller;
+package com.library.service;
 
 import com.library.domain.Rent;
 import com.library.domain.Specimen;
-import com.library.service.RentService;
-import com.library.service.SpecimenService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.library.exception.NotAvailableSpecimenException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,11 +13,10 @@ import java.util.stream.Collectors;
 import static com.library.domain.Specimen.SpecimenStatus.*;
 
 @Component
+@RequiredArgsConstructor
 public class Validator {
-    @Autowired
-    private SpecimenService specimenService;
-    @Autowired
-    private RentService rentService;
+    private final SpecimenService specimenService;
+    private final RentService rentService;
 
     public Specimen validateSpecimenIsAvailable(Long specimenId) {
         final Specimen specimen = specimenService.findById(specimenId);

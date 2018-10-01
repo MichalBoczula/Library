@@ -1,7 +1,8 @@
 package com.library.service;
 
-import com.library.controller.ReaderNotFoundException;
 import com.library.domain.Reader;
+import com.library.dto.ReaderDto;
+import com.library.exception.ReaderNotFoundException;
 import com.library.repository.ReaderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,10 @@ public class ReadersService {
                 orElseThrow(() -> new ReaderNotFoundException(readerId));
     }
 
-    public Reader save(final Reader reader) {
-        return readerRepository.save(reader);
+    public Reader save(final ReaderDto readerDto) {
+        return readerRepository.save(
+                ReaderDto.fromReaderDtoToReader(readerDto)
+        );
     }
 
-    public void delete(final Reader reader) {
-        readerRepository.delete(reader);
-    }
 }

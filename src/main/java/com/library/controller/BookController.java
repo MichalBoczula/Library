@@ -1,23 +1,23 @@
 package com.library.controller;
 
 import com.library.domain.Book;
-import com.library.domain.BookDto;
+import com.library.dto.BookDto;
 import com.library.service.BooksService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/library/books")
+@RequiredArgsConstructor
 public class BookController {
-    @Autowired
-    private BooksService booksService;
+    private final BooksService booksService;
 
-     @GetMapping
+    @GetMapping
     public List<BookDto> getBooks() {
-         final List<Book> books = booksService.findAll();
-         return BookDto.fromBookListToBookDtoList(books);
+        final List<Book> books = booksService.findAll();
+        return BookDto.fromBookListToBookDtoList(books);
     }
 
     @GetMapping("/{id}")
@@ -26,17 +26,20 @@ public class BookController {
         return BookDto.fromBookToBookDto(book);
     }
 
-    @PostMapping("/create")
-    public BookDto createBook(@RequestBody final Book book) {
+    @PostMapping
+    public BookDto createBook(@RequestBody final BookDto bookDto) {
         return BookDto.fromBookToBookDto(
-                booksService.save(book)
+                booksService.save(bookDto)
         );
     }
 
-    @PutMapping("/update")
-    public BookDto updateBook(@RequestBody final Book book) {
+    @PutMapping("/{id}")
+    public BookDto updateBook(
+            @PathVariable("id") final Long bookId,
+            @RequestBody final BookDto bookDto
+    ) {
         return BookDto.fromBookToBookDto(
-                booksService.save(book)
+                booksService.save(bookDto)
         );
     }
 }

@@ -1,5 +1,6 @@
-package com.library.domain;
+package com.library.dto;
 
+import com.library.domain.Rent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

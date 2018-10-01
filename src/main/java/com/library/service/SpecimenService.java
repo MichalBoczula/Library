@@ -1,7 +1,8 @@
 package com.library.service;
 
-import com.library.controller.SpecimenNotFoundException;
 import com.library.domain.Specimen;
+import com.library.dto.SpecimenDto;
+import com.library.exception.SpecimenNotFoundException;
 import com.library.repository.SpecimenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,10 @@ public class SpecimenService {
                 .orElseThrow(() -> new SpecimenNotFoundException(specimenId));
     }
 
-    public Specimen save(final Specimen specimen) {
-        return specimenRepository.save(specimen);
+    public Specimen save(final SpecimenDto specimenDto) {
+        return specimenRepository.save(
+                SpecimenDto.fromSpecimenDtoToSpecimen(specimenDto)
+        );
     }
 
-    public void delete(final Specimen specimen) {
-        specimenRepository.delete(specimen);
-    }
 }
