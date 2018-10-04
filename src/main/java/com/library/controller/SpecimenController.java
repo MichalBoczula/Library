@@ -2,6 +2,7 @@ package com.library.controller;
 
 import com.library.domain.Specimen;
 import com.library.dto.SpecimenDto;
+import com.library.exception.SpecimenNotFoundException;
 import com.library.service.SpecimenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,8 @@ public class SpecimenController {
 
     @GetMapping("/{id}")
     public SpecimenDto getSpecimen(@PathVariable("id") final Long specimenId) {
-        final Specimen specimen = specimenService.findById(specimenId);
+        final Specimen specimen = specimenService.findById(specimenId)
+                .orElseThrow(() -> new SpecimenNotFoundException(specimenId));
         return SpecimenDto.fromSpecimenToSpecimenDto(specimen);
     }
 

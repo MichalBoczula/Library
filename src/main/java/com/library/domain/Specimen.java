@@ -43,15 +43,11 @@ public class Specimen {
     public Specimen(
             Long id,
             SpecimenStatus status,
-            Book book,
-            Instant createdTime,
-            Instant lastModifiedTime
+            Book book
     ) {
         this.id = id;
         this.status = status;
         this.book = book;
-        this.createdTime = createdTime;
-        this.lastModifiedTime = lastModifiedTime;
     }
 
     public Specimen(

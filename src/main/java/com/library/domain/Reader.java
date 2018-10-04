@@ -30,7 +30,7 @@ public class Reader {
     private String lastName;
 
     @CreatedDate
-    private Date dateOfAccountCreation;
+    private Instant dateOfAccountCreation;
 
     @LastModifiedDate
     private Instant lastModifiedDate;
@@ -46,14 +46,10 @@ public class Reader {
     public Reader(
             Long id,
             String firstName,
-            String lastName,
-            Date dateOfAccountCreation,
-            Instant lastModifiedDate
+            String lastName
     ) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfAccountCreation = dateOfAccountCreation;
-        this.lastModifiedDate = lastModifiedDate;
     }
 }

@@ -47,9 +47,7 @@ public class SpecimenDto {
                 new Specimen(
                         specimenDto.getId(),
                         specimenDto.getStatus(),
-                        BookDto.fromBookDtoToBook(specimenDto.getBookDto()),
-                        specimenDto.getCreatedTime(),
-                        specimenDto.getLastModifiedTime()
+                        BookDto.fromBookDtoToBook(specimenDto.getBookDto())
                 );
     }
 }

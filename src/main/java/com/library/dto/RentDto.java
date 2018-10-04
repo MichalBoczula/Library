@@ -35,9 +35,7 @@ public class RentDto {
         return rentDto == null ? null :
                 new Rent(
                         rentDto.id,
-                        rentDto.getRentDate(),
                         rentDto.getReturnDate(),
-                        rentDto.getLastModifiedData(),
                         SpecimenDto.fromSpecimenDtoToSpecimen(rentDto.getSpecimenDto()),
                         ReaderDto.fromReaderDtoToReader(rentDto.getReaderDto())
                 );
@@ -56,19 +54,4 @@ public class RentDto {
                                 )
                         ).collect(Collectors.toList());
     }
-
-    public static List<Rent> fromRentListDtoToRentList(List<RentDto> rentDtos) {
-        return rentDtos == null ? null :
-                rentDtos.stream()
-                        .map(rent -> new Rent(
-                                        rent.getId(),
-                                        rent.getRentDate(),
-                                        rent.getReturnDate(),
-                                        rent.getLastModifiedData(),
-                                        SpecimenDto.fromSpecimenDtoToSpecimen(rent.getSpecimenDto()),
-                                        ReaderDto.fromReaderDtoToReader(rent.getReaderDto())
-                                )
-                        ).collect(Collectors.toList());
-    }
-
 }

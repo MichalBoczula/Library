@@ -17,7 +17,7 @@ import java.util.List;
 public class Book {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     private Long id;
 
     @NotNull

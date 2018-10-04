@@ -4,6 +4,8 @@ import com.library.domain.Reader;
 import com.library.domain.Rent;
 import com.library.domain.Specimen;
 import com.library.dto.RentDto;
+import com.library.exception.ReaderNotFoundException;
+import com.library.exception.RentNotFoundException;
 import com.library.service.ReadersService;
 import com.library.service.RentService;
 import com.library.service.Validator;
@@ -31,6 +33,7 @@ public class RentController {
     public RentDto getRent(@PathVariable("id") final Long rentId) {
         return RentDto.fromRentToRentDto(
                 rentService.findById(rentId)
+                        .orElseThrow(() -> new RentNotFoundException(rentId))
         );
     }
 
@@ -40,7 +43,8 @@ public class RentController {
             @RequestParam final Long readerId
     ) {
         final Specimen specimen = validator.validateSpecimenIsAvailable(specimenId);
-        final Reader reader = readersService.findByID(readerId);
+        final Reader reader = readersService.findById(readerId)
+                .orElseThrow(()-> new ReaderNotFoundException(readerId));
         final Rent rent = new Rent(specimen, reader);
         return RentDto.fromRentToRentDto(
                 rentService.save(

@@ -15,7 +15,7 @@ public class ReaderDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private Date dateOfAccountCreation;
+    private Instant dateOfAccountCreation;
     private Instant lastModifiedDate;
 
     public static ReaderDto fromReaderToReaderDto(Reader reader) {
@@ -34,9 +34,7 @@ public class ReaderDto {
                 new Reader(
                         readerDto.getId(),
                         readerDto.getFirstName(),
-                        readerDto.getLastName(),
-                        readerDto.getDateOfAccountCreation(),
-                        readerDto.getLastModifiedDate()
+                        readerDto.getLastName()
                 );
     }
 

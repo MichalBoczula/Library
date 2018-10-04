@@ -43,16 +43,12 @@ public class Rent {
 
     public Rent(
             Long id,
-            Instant rentDate,
             Date returnDate,
-            Instant lastModifiedData,
             Specimen specimen,
             Reader reader
     ) {
         this.id = id;
-        this.rentDate = rentDate;
         this.returnDate = returnDate;
-        this.lastModifiedData = lastModifiedData;
         this.specimen = specimen;
         this.reader = reader;
     }

@@ -3,6 +3,8 @@ package com.library.service;
 import com.library.domain.Rent;
 import com.library.domain.Specimen;
 import com.library.exception.NotAvailableSpecimenException;
+import com.library.exception.RentNotFoundException;
+import com.library.exception.SpecimenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,8 @@ public class Validator {
     private final RentService rentService;
 
     public Specimen validateSpecimenIsAvailable(Long specimenId) {
-        final Specimen specimen = specimenService.findById(specimenId);
+        final Specimen specimen = specimenService.findById(specimenId)
+                .orElseThrow(() -> new SpecimenNotFoundException(specimenId));
         if (specimen.getStatus().equals(IN_LIBRARY)) {
             specimen.setStatus(RENTED);
             return specimen;
@@ -45,7 +48,8 @@ public class Validator {
     }
 
     public Rent validateEndRent(Long rentId) {
-        Rent rent = rentService.findById(rentId);
+        Rent rent = rentService.findById(rentId)
+                .orElseThrow(() -> new RentNotFoundException(rentId));
         rent.setReturnDate(new Date());
         rent.getSpecimen()
                 .setStatus(IN_LIBRARY);
@@ -53,7 +57,8 @@ public class Validator {
     }
 
     public Rent validateEndRentBookIsDestroyed(Long rentId) {
-        Rent rent = rentService.findById(rentId);
+        Rent rent = rentService.findById(rentId)
+                .orElseThrow(() -> new RentNotFoundException(rentId));
         rent.setReturnDate(new Date());
         rent.getSpecimen()
                 .setStatus(DESTROYED);

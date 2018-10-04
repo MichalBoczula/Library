@@ -1,6 +1,7 @@
 package com.library.controller;
 
 import com.library.dto.ReaderDto;
+import com.library.exception.ReaderNotFoundException;
 import com.library.service.ReadersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ public class ReaderController {
     @GetMapping("/{id}")
     public ReaderDto getReader(@PathVariable("id") final Long readerId) {
         return ReaderDto.fromReaderToReaderDto(
-                readersService.findByID(readerId)
+                readersService.findById(readerId)
+                        .orElseThrow(() -> new ReaderNotFoundException(readerId))
         );
     }
 

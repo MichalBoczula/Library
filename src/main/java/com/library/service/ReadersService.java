@@ -2,13 +2,13 @@ package com.library.service;
 
 import com.library.domain.Reader;
 import com.library.dto.ReaderDto;
-import com.library.exception.ReaderNotFoundException;
 import com.library.repository.ReaderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,9 +20,8 @@ public class ReadersService {
         return readerRepository.findAll();
     }
 
-    public Reader findByID(final Long readerId) {
-        return readerRepository.findById(readerId).
-                orElseThrow(() -> new ReaderNotFoundException(readerId));
+    public Optional<Reader> findById(final Long readerId) {
+        return readerRepository.findById(readerId);
     }
 
     public Reader save(final ReaderDto readerDto) {

@@ -2,13 +2,13 @@ package com.library.service;
 
 import com.library.domain.Specimen;
 import com.library.dto.SpecimenDto;
-import com.library.exception.SpecimenNotFoundException;
 import com.library.repository.SpecimenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,9 +20,8 @@ public class SpecimenService {
         return specimenRepository.findAll();
     }
 
-    public Specimen findById(final Long specimenId) {
-        return specimenRepository.findById(specimenId)
-                .orElseThrow(() -> new SpecimenNotFoundException(specimenId));
+    public Optional<Specimen> findById(final Long specimenId) {
+        return specimenRepository.findById(specimenId);
     }
 
     public Specimen save(final SpecimenDto specimenDto) {

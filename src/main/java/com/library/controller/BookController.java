@@ -2,11 +2,13 @@ package com.library.controller;
 
 import com.library.domain.Book;
 import com.library.dto.BookDto;
+import com.library.exception.BookNotFoundException;
 import com.library.service.BooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/library/books")
@@ -22,7 +24,8 @@ public class BookController {
 
     @GetMapping("/{id}")
     public BookDto getBook(@PathVariable("id") final Long bookId) {
-        final Book book = booksService.findById(bookId);
+        final Book book = booksService.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId));
         return BookDto.fromBookToBookDto(book);
     }
 
