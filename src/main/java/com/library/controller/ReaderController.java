@@ -15,7 +15,7 @@ public class ReaderController {
     private final ReadersService readersService;
 
     @GetMapping
-    public List<ReaderDto> getBooks() {
+    public List<ReaderDto> getReaders() {
         return ReaderDto.formReaderListToReaderDtoList(
                 readersService.findAll()
         );

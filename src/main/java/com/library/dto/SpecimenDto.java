@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,8 @@ public class SpecimenDto {
     private Long id;
     private Specimen.SpecimenStatus status;
     private BookDto bookDto;
-    private Instant createdTime;
-    private Instant lastModifiedTime;
+    private Date createdTime;
+    private Date lastModifiedTime;
 
 
     public static SpecimenDto fromSpecimenToSpecimenDto(Specimen specimen) {

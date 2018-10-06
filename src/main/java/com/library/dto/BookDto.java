@@ -4,6 +4,7 @@ import com.library.domain.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,8 @@ public class BookDto {
     private String title;
     private String author;
     private String dateOfPublication;
+    private Date createdTime;
+    private Date lastModifiedTime;
 
     public static BookDto fromBookToBookDto(Book book) {
         return book == null ? null :
@@ -21,7 +24,9 @@ public class BookDto {
                         book.getId(),
                         book.getTitle(),
                         book.getAuthor(),
-                        book.getDateOfPublication()
+                        book.getDateOfPublication(),
+                        book.getCreatedTime(),
+                        book.getLastModifiedTime()
                 );
     }
 
@@ -42,7 +47,9 @@ public class BookDto {
                                         book.getId(),
                                         book.getTitle(),
                                         book.getAuthor(),
-                                        book.getDateOfPublication()
+                                        book.getDateOfPublication(),
+                                        book.getCreatedTime(),
+                                        book.getLastModifiedTime()
                                 )
                         ).collect(Collectors.toList());
     }

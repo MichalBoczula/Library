@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RentDto {
     private Long id;
-    private Instant rentDate;
+    private Date rentDate;
     private Date returnDate;
-    private Instant lastModifiedData;
+    private Date lastModifiedData;
     private SpecimenDto specimenDto;
     private ReaderDto readerDto;
 

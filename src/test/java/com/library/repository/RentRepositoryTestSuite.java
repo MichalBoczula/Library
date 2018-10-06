@@ -48,10 +48,10 @@ public class RentRepositoryTestSuite {
 
     @After
     public void cleanUp(){
-        rentRepository.delete(rent);
-        specimenRepository.delete(specimen);
-        readerRepository.delete(reader);
-        bookRepository.delete(book);
+        rentRepository.deleteAll();
+        specimenRepository.deleteAll();
+        bookRepository.deleteAll();
+        readerRepository.deleteAll();
     }
 
     @Test

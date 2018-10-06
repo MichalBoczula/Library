@@ -15,8 +15,8 @@ public class ReaderDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private Instant dateOfAccountCreation;
-    private Instant lastModifiedDate;
+    private Date dateOfAccountCreation;
+    private Date lastModifiedDate;
 
     public static ReaderDto fromReaderToReaderDto(Reader reader) {
         return reader == null ? null :

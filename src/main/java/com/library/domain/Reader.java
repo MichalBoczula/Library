@@ -30,10 +30,10 @@ public class Reader {
     private String lastName;
 
     @CreatedDate
-    private Instant dateOfAccountCreation;
+    private Date dateOfAccountCreation;
 
     @LastModifiedDate
-    private Instant lastModifiedDate;
+    private Date lastModifiedDate;
 
     public Reader(
             String firstName,

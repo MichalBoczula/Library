@@ -7,8 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -38,10 +38,10 @@ public class Book {
     private List<Specimen> specimens = new ArrayList<>();
 
     @CreatedDate
-    private Instant createdTime;
+    private Date createdTime;
 
     @LastModifiedDate
-    private Instant lastModifiedTime;
+    private Date lastModifiedTime;
 
 
     public Book(

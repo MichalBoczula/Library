@@ -18,12 +18,12 @@ public class Rent {
     private Long id;
 
     @CreatedDate
-    private Instant rentDate;
+    private Date rentDate;
 
     private Date returnDate;
 
     @LastModifiedDate
-    private Instant lastModifiedData;
+    private Date lastModifiedData;
 
     @ManyToOne
     @JoinColumn(name = "specimen_id")
