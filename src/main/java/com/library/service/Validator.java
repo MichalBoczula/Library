@@ -27,7 +27,7 @@ public class Validator {
             specimen.setStatus(RENTED);
             return specimen;
         } else {
-            final Specimen availableSpecimen = findAvailableSpecimenInLibrary();
+            final Specimen availableSpecimen = findAvailableSpecimenInLibrary(specimen.getBook().getTitle());
             if (availableSpecimen == null) {
                 throw new NotAvailableSpecimenException();
             } else {
@@ -37,14 +37,17 @@ public class Validator {
         }
     }
 
-    private Specimen findAvailableSpecimenInLibrary() {
+    private Specimen findAvailableSpecimenInLibrary(String title) {
         final List<Specimen> specimenList = specimenService.findAll();
-        final List<Specimen> availableSpecimens = specimenList.stream()
-                .filter(specimen -> specimen.getStatus().equals(IN_LIBRARY))
+        final List<Specimen> specimens = specimenList.stream()
+                .filter(s1 -> s1.getStatus().equals(IN_LIBRARY))
                 .collect(Collectors.toList());
-        return availableSpecimens != null ?
-                specimenList.get(0)
-                : null;
+        final List<Specimen> availableSpecimensToRent = specimens.stream()
+                .filter(s2 -> s2.getBook().getTitle().equals(title))
+                .collect(Collectors.toList());
+        return availableSpecimensToRent.size() != 0 ?
+                availableSpecimensToRent.get(0) :
+                null;
     }
 
     public Rent validateEndRent(Long rentId) {

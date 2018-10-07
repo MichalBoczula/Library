@@ -18,6 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.library.domain.Specimen.SpecimenStatus.IN_LIBRARY;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -34,10 +38,18 @@ public class ValidatorTestSuite {
     private ReaderRepository readerRepository;
     @Autowired
     private RentRepository rentRepository;
-    private Book book;
-    private Specimen specimen;
+    private Book book1;
+    private Book book2;
+    private Specimen specimen1;
+    private Specimen specimen2;
+    private Specimen specimen3;
+    private Specimen specimen4;
+    private Specimen specimen5;
     private Reader reader;
     private Rent rent;
+    @Autowired
+    private SpecimenService specimenService;
+
 
     @Before
     public void init(){
@@ -46,13 +58,23 @@ public class ValidatorTestSuite {
         specimenRepository.deleteAll();
         bookRepository.deleteAll();
         readerRepository.deleteAll();
-        book = new Book("test", "test", "2000");
-        specimen = new Specimen(Specimen.SpecimenStatus.IN_LIBRARY, book);
+        book1 = new Book("test", "test", "2000");
+        book2 = new Book("try", "try", "2000");
+        specimen1 = new Specimen(Specimen.SpecimenStatus.IN_LIBRARY, book1);
+        specimen2 = new Specimen(Specimen.SpecimenStatus.IN_LIBRARY, book1);
+        specimen3 = new Specimen(Specimen.SpecimenStatus.IN_LIBRARY, book2);
+        specimen4 = new Specimen(Specimen.SpecimenStatus.RENTED, book1);
+        specimen5 = new Specimen(Specimen.SpecimenStatus.DESTROYED, book2);
         reader = new Reader("test", "test");
-        rent = new Rent(specimen, reader);
+        rent = new Rent(specimen1, reader);
         readerRepository.saveAndFlush(reader);
-        bookRepository.saveAndFlush(book);
-        specimenRepository.saveAndFlush(specimen);
+        bookRepository.saveAndFlush(book1);
+        bookRepository.saveAndFlush(book2);
+        specimenRepository.saveAndFlush(specimen1);
+        specimenRepository.saveAndFlush(specimen2);
+        specimenRepository.saveAndFlush(specimen3);
+        specimenRepository.saveAndFlush(specimen4);
+        specimenRepository.saveAndFlush(specimen5);
         rentRepository.saveAndFlush(rent);
         LOGGER.info("init finished");
     }
@@ -73,7 +95,7 @@ public class ValidatorTestSuite {
         //given
         //init
         //when
-        final Specimen test = validator.validateSpecimenIsAvailable(specimen.getId());
+        final Specimen test = validator.validateSpecimenIsAvailable(specimen1.getId());
         //test
         assertEquals(Specimen.SpecimenStatus.RENTED, test.getStatus());
         LOGGER.info("validateSpecimenIsAvailable finished");
@@ -101,5 +123,18 @@ public class ValidatorTestSuite {
         //assert
         assertEquals(Specimen.SpecimenStatus.DESTROYED, test.getSpecimen().getStatus());
         LOGGER.info("validateEndRentBookIsDestroyed finished");
+    }
+
+    @Test
+    public void findAvailableSpecimenInLibrary() {
+        final List<Specimen> specimenList = specimenService.findAll();
+        final List<Specimen> availableSpecimens = specimenList.stream()
+                .filter(s1 -> s1.getStatus().equals(IN_LIBRARY))
+                .collect(Collectors.toList());
+        final List<Specimen> avl = availableSpecimens.stream()
+                .filter(s2 -> s2.getBook().getTitle().equals(book2.getTitle()))
+                .collect(Collectors.toList());
+        System.out.println(availableSpecimens.size());
+        System.out.println(avl.size());
     }
 }
