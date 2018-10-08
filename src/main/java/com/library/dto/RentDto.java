@@ -3,6 +3,7 @@ package com.library.dto;
 import com.library.domain.Rent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class RentDto {
     private Long id;
     private Date rentDate;

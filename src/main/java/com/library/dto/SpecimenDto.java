@@ -3,6 +3,7 @@ package com.library.dto;
 import com.library.domain.Specimen;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class SpecimenDto {
     private Long id;
     private Specimen.SpecimenStatus status;

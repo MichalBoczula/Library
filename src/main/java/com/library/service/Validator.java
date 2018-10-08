@@ -54,8 +54,7 @@ public class Validator {
         Rent rent = rentService.findById(rentId)
                 .orElseThrow(() -> new RentNotFoundException(rentId));
         rent.setReturnDate(new Date());
-        rent.getSpecimen()
-                .setStatus(IN_LIBRARY);
+        rent.getSpecimen().setStatus(IN_LIBRARY);
         return rent;
     }
 

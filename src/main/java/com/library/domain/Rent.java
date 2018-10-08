@@ -18,6 +18,7 @@ public class Rent {
     private Long id;
 
     @CreatedDate
+    @Column(updatable = false)
     private Date rentDate;
 
     private Date returnDate;
