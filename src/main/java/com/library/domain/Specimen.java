@@ -30,7 +30,7 @@ public class Specimen {
     @OneToMany(
             targetEntity = Rent.class,
             mappedBy = "specimen",
-            cascade = CascadeType.MERGE,
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<Rent> rents;

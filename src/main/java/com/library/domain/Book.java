@@ -32,7 +32,7 @@ public class Book {
     @OneToMany(
             targetEntity = Specimen.class,
             mappedBy = "book",
-            cascade = CascadeType.MERGE,
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<Specimen> specimens = new ArrayList<>();

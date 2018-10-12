@@ -36,9 +36,8 @@ public class ReaderController {
         );
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ReaderDto updateReader(
-            @PathVariable("id") final Long readerId,
             @RequestBody final ReaderDto readerDto
     ) {
         return ReaderDto.fromReaderToReaderDto(

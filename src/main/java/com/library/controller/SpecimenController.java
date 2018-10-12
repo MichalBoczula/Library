@@ -35,9 +35,8 @@ public class SpecimenController {
         );
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public SpecimenDto returnSpecimen(
-            @PathVariable("id") final Long specimenId,
             @RequestBody final SpecimenDto specimenDto
     ) {
         return SpecimenDto.fromSpecimenToSpecimenDto(
